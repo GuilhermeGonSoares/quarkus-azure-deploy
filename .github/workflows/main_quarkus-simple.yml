@@ -56,4 +56,4 @@ jobs:
         with:
           app-name: 'quarkus-simple'
           slot-name: 'Production'
-          package: 'quarkus-azure-deploy-1.0-SNAPSHOT.jar'
+          package: 'quarkus-app/quarkus-run.jar'
