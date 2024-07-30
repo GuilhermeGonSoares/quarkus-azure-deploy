@@ -49,7 +49,7 @@ jobs:
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_0E1AC52B55B84749AF763FAE453C8BEE }}
 
       - name: List downloaded files
-        run: ls -l ${{ github.workspace }}/java-app
+        run: ls -l ./java-app
         
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
