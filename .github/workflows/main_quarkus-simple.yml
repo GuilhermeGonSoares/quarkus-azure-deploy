@@ -49,11 +49,11 @@ jobs:
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_0E1AC52B55B84749AF763FAE453C8BEE }}
 
       - name: List downloaded files
-        run: ls 
+        run: ls
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'quarkus-simple'
           slot-name: 'Production'
-          package: './java-app/quarkus-azure-deploy-1.0-SNAPSHOT.jar'
+          package: 'quarkus-azure-deploy-1.0-SNAPSHOT.jar'
