@@ -1,12 +1,14 @@
 package azure.deploy.repositories;
 
 import azure.deploy.entities.Todo;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@ApplicationScoped
 public class TodoRepository {
     private static Long NEXT_ID = 4L;
     private final List<Todo> todos = new ArrayList<>();
