@@ -19,13 +19,15 @@ jobs:
           distribution: 'microsoft'
       - name: Build with Maven
         run: mvn clean install
-      - name: List files in target directory
-        run: ls -l ${{ github.workspace }}/target/
+
+      - name: List files
+        run: ls
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: '${{ github.workspace }}/target/**'
+          path: '${{ github.workspace }}/target/*.jar'
 
   deploy:
     runs-on: ubuntu-latest
@@ -48,12 +50,9 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_C8FAC47506794CE680F0D9A0BDBAFBF5 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_0E1AC52B55B84749AF763FAE453C8BEE }}
 
-      - name: List downloaded files
-        run: ls
-
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'quarkus-simple'
           slot-name: 'Production'
-          package: 'quarkus-app/quarkus-run.jar'
+          package: '*.jar'
