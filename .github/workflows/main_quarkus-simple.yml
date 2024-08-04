@@ -45,6 +45,12 @@ jobs:
         with:
           name: java-app
 
+      - name: Unzip Fast-Jar
+        run: unzip quarkus-app.zip -d target/
+
+      - name: List Files for Debugging
+        run: ls -R target
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -52,12 +58,9 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_C8FAC47506794CE680F0D9A0BDBAFBF5 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_0E1AC52B55B84749AF763FAE453C8BEE }}
 
-      - name: Unzip Fast-Jar
-        run: unzip quarkus-app.zip -d target/
-
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'quarkus-simple'
           slot-name: 'Production'
-          package: target/quarkus-app
+          package: 'target/quarkus-app'
