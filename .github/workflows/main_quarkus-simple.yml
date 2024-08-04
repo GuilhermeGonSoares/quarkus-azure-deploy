@@ -46,10 +46,10 @@ jobs:
           name: java-app
 
       - name: Unzip Fast-Jar
-        run: unzip quarkus-app.zip -d target/quarkus-app
+        run: unzip quarkus-app.zip
 
       - name: List Files for Debugging
-        run: ls -R target
+        run: ls -R .
 
       - name: Login to Azure
         uses: azure/login@v2
