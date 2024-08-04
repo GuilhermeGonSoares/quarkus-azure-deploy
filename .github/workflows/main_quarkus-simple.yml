@@ -1,4 +1,4 @@
-name: Build and deploy JAR app to Azure Web App - quarkus-simple
+name: Build and deploy fast-jar app to Azure Web App - quarkus-simple
 
 on:
   push:
@@ -21,11 +21,14 @@ jobs:
       - name: Build with Maven
         run: mvn clean install
 
+      - name: Compress Fast-Jar
+        run: zip -r quarkus-app.zip target/quarkus-app
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: '${{ github.workspace }}/target/*.jar'
+          path: quarkus-app.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -41,6 +44,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: java-app
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -48,9 +52,12 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_C8FAC47506794CE680F0D9A0BDBAFBF5 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_0E1AC52B55B84749AF763FAE453C8BEE }}
 
+      - name: Unzip Fast-Jar
+        run: unzip quarkus-app.zip -d target/
+
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'quarkus-simple'
           slot-name: 'Production'
-          package: '*.jar'
+          package: target/quarkus-app
