@@ -46,7 +46,7 @@ jobs:
           name: java-app
 
       - name: Unzip Fast-Jar
-        run: unzip quarkus-app.zip -d target/
+        run: unzip quarkus-app.zip -d target/quarkus-app
 
       - name: List Files for Debugging
         run: ls -R target
